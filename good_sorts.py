@@ -67,6 +67,43 @@ def merge(left, right):
                 L.append(right[j])
                 j += 1
     return L
+def bottom_up_mergesort(L):
+    n = len(L)
+    temp = [0] * n
+    width = 1
+
+    while width < n:
+        for left in range(0, n, 2 * width):
+            mid = min(left + width, n)
+            right = min(left + 2 * width, n)
+
+            i, j, k = left, mid, left
+
+            while i < mid and j < right:
+                if L[i] <= L[j]:
+                    temp[k] = L[i]
+                    i += 1
+                else:
+                    temp[k] = L[j]
+                    j += 1
+                k += 1
+
+            while i < mid:
+                temp[k] = L[i]
+                i += 1
+                k += 1
+
+            while j < right:
+                temp[k] = L[j]
+                j += 1
+                k += 1
+
+        # Copy temp back into L
+        for i in range(n):
+            L[i] = temp[i]
+
+        width *= 2
+
 
 # *************************************
 
